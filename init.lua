@@ -29,7 +29,7 @@ require("lazy").setup({
   'neovim/nvim-lspconfig',
   'hrsh7th/nvim-cmp',
   'hrsh7th/cmp-nvim-lsp',
-  'saadparwaiz1/cmp_luasnip', 
+  'saadparwaiz1/cmp_luasnip',
   'L3MON4D3/LuaSnip',
   'nvim-tree/nvim-web-devicons',
   'lewis6991/gitsigns.nvim',
@@ -52,9 +52,19 @@ require("lazy").setup({
   {
     "nvim-neorg/neorg",
     dependencies = { "luarocks.nvim" },
-    config = function()
-      require("neorg").setup({})
-    end,
+    opts = {
+      load = {
+        ["core.defaults"] = {}, -- Loads default behaviour
+        ["core.concealer"] = {}, -- Adds pretty icons to your documents
+        ["core.dirman"] = { -- Manages Neorg workspaces
+        config = {
+          workspaces = {
+            icloud = "~/Documents/Neorg",
+          },
+          default_workspace = "icloud",
+        },
+      },
+    }}
   },
 })
 
