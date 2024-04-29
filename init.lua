@@ -32,63 +32,74 @@ require("lazy").setup({
   'saadparwaiz1/cmp_luasnip',
   'L3MON4D3/LuaSnip',
   'nvim-tree/nvim-web-devicons',
-  'lewis6991/gitsigns.nvim',
+  {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
+      "ibhagwan/fzf-lua",
+    },
+    config = true,
+  },
   -- 'romgrk/barbar.nvim',
   'nvim-tree/nvim-tree.lua',
   'nvim-treesitter/nvim-treesitter',
   {
-    'nvim-telescope/telescope.nvim', tag = '0.1.2',
+    'nvim-telescope/telescope.nvim',
+    tag = '0.1.2',
     dependencies = { 'nvim-lua/plenary.nvim' }
   },
   {
     'windwp/nvim-autopairs',
     event = "InsertEnter",
     opts = {} -- this is equalent to setup({}) function
-  },    {
-    "vhyrro/luarocks.nvim",
-    priority = 1000, -- We'd like this plugin to load first out of the rest
-    config = true, -- This automatically runs `require("luarocks-nvim").setup()`
-  },
+  }, {
+  "vhyrro/luarocks.nvim",
+  priority = 1000, -- We'd like this plugin to load first out of the rest
+  config = true,   -- This automatically runs `require("luarocks-nvim").setup()`
+},
   {
     "nvim-neorg/neorg",
     dependencies = { "luarocks.nvim" },
     opts = {
       load = {
-        ["core.defaults"] = {}, -- Loads default behaviour
+        ["core.defaults"] = {},  -- Loads default behaviour
         ["core.concealer"] = {}, -- Adds pretty icons to your documents
-        ["core.dirman"] = { -- Manages Neorg workspaces
-        config = {
-          workspaces = {
-            icloud = "~/Documents/Neorg",
+        ["core.dirman"] = {      -- Manages Neorg workspaces
+          config = {
+            workspaces = {
+              icloud = "~/Documents/Neorg",
+            },
+            default_workspace = "icloud",
           },
-          default_workspace = "icloud",
         },
-      },
-    }}
+      }
+    }
   },
 })
 
 vim.opt.termguicolors = true
 vim.cmd.colorscheme('xcodedarkhc')
-vim.api.nvim_set_hl(0, "Normal", {guibg=NONE, ctermbg=NONE})
-vim.api.nvim_set_hl(0, "NonText", {guibg=NONE, ctermbg=NONE})
-vim.api.nvim_set_hl(0, "EndOfBuffer", {guibg=NONE, ctermbg=NONE})
+vim.api.nvim_set_hl(0, "Normal", { guibg = NONE, ctermbg = NONE })
+vim.api.nvim_set_hl(0, "NonText", { guibg = NONE, ctermbg = NONE })
+vim.api.nvim_set_hl(0, "EndOfBuffer", { guibg = NONE, ctermbg = NONE })
 vim.g.mapleader = ' '
 vim.cmd.syntax('enable')
-vim.o.expandtab=true
-vim.o.tabstop=2
-vim.o.shiftwidth=2
-vim.o.ai=true
-vim.o.clipboard='unnamedplus'
-vim.g.mouse=auto
-vim.o.autochdir=true
-vim.o.number=true
+vim.o.expandtab = true
+vim.o.tabstop = 2
+vim.o.shiftwidth = 2
+vim.o.ai = true
+vim.o.clipboard = 'unnamedplus'
+vim.g.mouse = auto
+vim.o.autochdir = true
+vim.o.number = true
 vim.o.relativenumber = true
 
 vim.g.python3_host_prog = "/opt/homebrew/anaconda3/bin/python3"
 
 require("lsp")
 require("plugins/nvim-tree")
+require("plugins/neogit")
 -- require("plugins/neorg")
 -- require("plugins/barbar")
 require("plugins/telescope")
