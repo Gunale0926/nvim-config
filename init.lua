@@ -25,6 +25,7 @@ require("lazy").setup({
       -- refer to the configuration section below
     }
   },
+  { "ellisonleao/glow.nvim", config = true, cmd = "Glow" },
   'arzg/vim-colors-xcode',
   'neovim/nvim-lspconfig',
   'hrsh7th/nvim-cmp',
