@@ -4,6 +4,8 @@ require("nvim-tree").setup({
     dotfiles = true,
   }
 })
-wk.register({
-  n = { "<Cmd>NvimTreeToggle<CR>", "Nvim-tree Toggle" },
-}, { prefix = "<leader>" })
+
+wk.add({
+  { "<leader>n", "<Cmd>NvimTreeToggle<CR>", desc = "toggle nvim-tree" },
+}
+)

@@ -30,6 +30,7 @@ require("lazy").setup({
   'neovim/nvim-lspconfig',
   'hrsh7th/nvim-cmp',
   'hrsh7th/cmp-nvim-lsp',
+  -- 'mfussenegger/nvim-jdtls',
   'saadparwaiz1/cmp_luasnip',
   'L3MON4D3/LuaSnip',
   'github/copilot.vim',
@@ -56,28 +57,19 @@ require("lazy").setup({
     event = "InsertEnter",
     opts = {} -- this is equalent to setup({}) function
   }, {
-  "vhyrro/luarocks.nvim",
-  priority = 1000, -- We'd like this plugin to load first out of the rest
-  config = true,   -- This automatically runs `require("luarocks-nvim").setup()`
-},
-  {
-    "nvim-neorg/neorg",
-    dependencies = { "luarocks.nvim" },
-    opts = {
-      load = {
-        ["core.defaults"] = {},  -- Loads default behaviour
-        ["core.concealer"] = {}, -- Adds pretty icons to your documents
-        ["core.dirman"] = {      -- Manages Neorg workspaces
-          config = {
-            workspaces = {
-              icloud = "~/Documents/Neorg",
-            },
-            default_workspace = "icloud",
-          },
-        },
-      }
-    }
+    "vhyrro/luarocks.nvim",
+    priority = 1000, -- We'd like this plugin to load first out of the rest
+    config = true,   -- This automatically runs `require("luarocks-nvim").setup()`
   },
+  {
+    "lervag/vimtex",
+    lazy = false,     -- we don't want to lazy load VimTeX
+    -- tag = "v2.15", -- uncomment to pin to a specific release
+    init = function()
+      -- VimTeX configuration goes here, e.g.
+      vim.g.vimtex_view_method = "zathura"
+    end
+  }
 })
 
 vim.opt.termguicolors = true
@@ -102,6 +94,7 @@ vim.g.python3_host_prog = "/opt/homebrew/anaconda3/bin/python3"
 require("lsp")
 require("plugins/nvim-tree")
 require("plugins/neogit")
+require("plugins/telescope")
+-- require("plugins/jdtls")
 -- require("plugins/neorg")
 -- require("plugins/barbar")
-require("plugins/telescope")
