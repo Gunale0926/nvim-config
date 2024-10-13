@@ -16,6 +16,23 @@ end
 local wk = require("which-key")
 wk.add({
   { "<leader>l", vim.lsp.buf.format, desc = "format buffer" },
+  { "gd", vim.lsp.buf.definition, desc = "go to definition" },
+  { "gD", vim.lsp.buf.declaration, desc = "go to declaration" },
+  { "gr", vim.lsp.buf.references, desc = "go to references" },
+  { "gi", vim.lsp.buf.implementation, desc = "go to implementation" },
+  { "K", vim.lsp.buf.hover, desc = "show hover" },
+  { "<C-k>", vim.lsp.buf.signature_help, desc = "show signature help" },
+  { "<leader>rn", vim.lsp.buf.rename, desc = "rename symbol" },
+  { "<leader>ca", vim.lsp.buf.code_action, desc = "code action" },
+  { "<leader>wa", vim.lsp.buf.add_workspace_folder, desc = "add workspace folder" },
+  { "<leader>wr", vim.lsp.buf.remove_workspace_folder, desc = "remove workspace folder" },
+  { "<leader>wl", vim.lsp.buf.list_workspace_folders, desc = "list workspace folders" },
+  { "<leader>D", vim.lsp.buf.type_definition, desc = "go to type definition" },
+  { "<leader>q", vim.lsp.diagnostic.set_loclist, desc = "set loclist" },
+  { "[d", vim.lsp.diagnostic.goto_prev, desc = "go to previous diagnostic" },
+  { "]d", vim.lsp.diagnostic.goto_next, desc = "go to next diagnostic" },
+  { "<leader>l", vim.lsp.diagnostic.show_line_diagnostics, desc = "show line diagnostics" },
+  { "<leader>q", vim.lsp.diagnostic.set_loclist, desc = "set loclist" },
 }
 )
 
