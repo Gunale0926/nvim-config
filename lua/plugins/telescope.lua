@@ -7,5 +7,4 @@ wk.add({
   { "<leader>fb", builtin.buffers,     desc = "buffers" },
   { "<leader>fg", builtin.live_grep,   desc = "live grep" },
   { "<leader>fh", builtin.help_tags,   desc = "help tags" },
-}
-)
+})

@@ -7,5 +7,4 @@ require("nvim-tree").setup({
 
 wk.add({
   { "<leader>n", "<Cmd>NvimTreeToggle<CR>", desc = "toggle nvim-tree" },
-}
-)
+})

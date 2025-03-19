@@ -27,10 +27,21 @@ require("lazy").setup({
   },
   { "ellisonleao/glow.nvim", config = true, cmd = "Glow" },
   'arzg/vim-colors-xcode',
+  {
+    "williamboman/mason.nvim",
+    init = function()
+      require("mason").setup()
+    end,
+  },
+  {
+    "williamboman/mason-lspconfig.nvim",
+    init = function()
+      require("mason-lspconfig").setup()
+    end,
+  },
   'neovim/nvim-lspconfig',
   'hrsh7th/nvim-cmp',
   'hrsh7th/cmp-nvim-lsp',
-  -- 'mfussenegger/nvim-jdtls',
   'saadparwaiz1/cmp_luasnip',
   'L3MON4D3/LuaSnip',
   'github/copilot.vim',
