@@ -32,19 +32,26 @@ require("lazy").setup({
     init = function()
       require("mason").setup()
     end,
+    dependencies = {
+      {
+        "L3MON4D3/LuaSnip",
+        -- follow latest release.
+        version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+        -- install jsregexp (optional!).
+        build = "make install_jsregexp"
+      }
+    }
+    
   },
   {
     "williamboman/mason-lspconfig.nvim",
     init = function()
       require("mason-lspconfig").setup()
-    end,
+    end
   },
   'neovim/nvim-lspconfig',
   'hrsh7th/nvim-cmp',
   'hrsh7th/cmp-nvim-lsp',
-  'saadparwaiz1/cmp_luasnip',
-  'L3MON4D3/LuaSnip',
-  'github/copilot.vim',
   'nvim-tree/nvim-web-devicons',
   {
     "NeogitOrg/neogit",
@@ -55,7 +62,7 @@ require("lazy").setup({
     },
     config = true,
   },
-  -- 'romgrk/barbar.nvim',
+  'romgrk/barbar.nvim',
   'nvim-tree/nvim-tree.lua',
   'nvim-treesitter/nvim-treesitter',
   {
@@ -67,10 +74,15 @@ require("lazy").setup({
     'windwp/nvim-autopairs',
     event = "InsertEnter",
     opts = {} -- this is equalent to setup({}) function
-  }, {
-    "vhyrro/luarocks.nvim",
-    priority = 1000, -- We'd like this plugin to load first out of the rest
-    config = true,   -- This automatically runs `require("luarocks-nvim").setup()`
+  },
+  {
+    "greggh/claude-code.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim", -- Required for git operations
+    },
+    config = function()
+      require("claude-code").setup()
+    end
   },
   {
     "lervag/vimtex",
@@ -106,6 +118,4 @@ require("lsp")
 require("plugins/nvim-tree")
 require("plugins/neogit")
 require("plugins/telescope")
--- require("plugins/jdtls")
--- require("plugins/neorg")
--- require("plugins/barbar")
+require("plugins/barbar")
