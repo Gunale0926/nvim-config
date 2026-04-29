@@ -1,39 +1,120 @@
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
-local lspconfig = require('lspconfig')
+
+vim.lsp.config('*', {
+  capabilities = capabilities,
+})
+
+local texlab_config = {
+  settings = {
+    texlab = {
+      build = {
+        executable = 'latexmk',
+        args = {
+          '-pdf',
+          '-interaction=nonstopmode',
+          '-synctex=1',
+          '%f',
+        },
+        onSave = false,
+        forwardSearchAfter = false,
+      },
+      chktex = {
+        onOpenAndSave = true,
+        onEdit = false,
+      },
+      diagnosticsDelay = 300,
+      latexFormatter = 'latexindent',
+      latexindent = {
+        modifyLineBreaks = false,
+      },
+    },
+  },
+}
+
+vim.lsp.config('texlab', texlab_config)
 
 require('mason-lspconfig').setup({
-  handlers = {
-    function(server_name)
-      lspconfig[server_name].setup({})
-    end
-  }
+  automatic_enable = true,
 })
+
+if vim.fn.executable('texlab') == 1 then
+  vim.lsp.enable('texlab')
+end
+
+local function lsp_health()
+  vim.cmd('checkhealth vim.lsp')
+end
+
+local function lsp_restart()
+  vim.cmd('LspRestart')
+end
+
+local function lsp_stop()
+  vim.cmd('LspStop')
+end
+
+local function lsp_start()
+  vim.cmd('LspStart')
+end
+
+local function previous_diagnostic()
+  vim.diagnostic.jump({ count = -1, float = true })
+end
+
+local function next_diagnostic()
+  vim.diagnostic.jump({ count = 1, float = true })
+end
+
+local function toggle_inlay_hints()
+  local filter = { bufnr = 0 }
+  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled(filter), filter)
+end
 
 local wk = require("which-key")
 wk.add({
-  { "<leader>l", vim.lsp.buf.format, desc = "format buffer" },
-  { "gd", vim.lsp.buf.definition, desc = "go to definition" },
-  { "gD", vim.lsp.buf.declaration, desc = "go to declaration" },
-  { "gr", vim.lsp.buf.references, desc = "go to references" },
-  { "gi", vim.lsp.buf.implementation, desc = "go to implementation" },
-  { "K", vim.lsp.buf.hover, desc = "show hover" },
-  { "<C-k>", vim.lsp.buf.signature_help, desc = "show signature help" },
-  { "<leader>rn", vim.lsp.buf.rename, desc = "rename symbol" },
-  { "<leader>ca", vim.lsp.buf.code_action, desc = "code action" },
-  { "<leader>wa", vim.lsp.buf.add_workspace_folder, desc = "add workspace folder" },
-  { "<leader>wr", vim.lsp.buf.remove_workspace_folder, desc = "remove workspace folder" },
-  { "<leader>wl", vim.lsp.buf.list_workspace_folders, desc = "list workspace folders" },
-  { "<leader>D", vim.lsp.buf.type_definition, desc = "go to type definition" },
-  { "<leader>q", vim.lsp.diagnostic.set_loclist, desc = "set loclist" },
-  { "[d", vim.lsp.diagnostic.goto_prev, desc = "go to previous diagnostic" },
-  { "]d", vim.lsp.diagnostic.goto_next, desc = "go to next diagnostic" },
-  { "<leader>l", vim.lsp.diagnostic.show_line_diagnostics, desc = "show line diagnostics" },
-  { "<leader>q", vim.lsp.diagnostic.set_loclist, desc = "set loclist" },
-}
-)
+  { "<leader>l", group = "lsp" },
+  { "<leader>la", vim.lsp.buf.code_action, desc = "code action", mode = { "n", "v" } },
+  { "<leader>lc", vim.lsp.codelens.run, desc = "run codelens" },
+  { "<leader>lC", vim.lsp.codelens.refresh, desc = "refresh codelens" },
+  { "<leader>ld", vim.lsp.buf.definition, desc = "definition" },
+  { "<leader>lD", vim.lsp.buf.declaration, desc = "declaration" },
+  { "<leader>le", vim.diagnostic.open_float, desc = "line diagnostics" },
+  { "<leader>lf", vim.lsp.buf.format, desc = "format buffer", mode = { "n", "v" } },
+  { "<leader>lh", vim.lsp.buf.hover, desc = "hover docs" },
+  { "<leader>li", vim.lsp.buf.implementation, desc = "implementation" },
+  { "<leader>lI", toggle_inlay_hints, desc = "toggle inlay hints" },
+  { "<leader>ln", next_diagnostic, desc = "next diagnostic" },
+  { "<leader>lp", previous_diagnostic, desc = "previous diagnostic" },
+  { "<leader>lq", vim.diagnostic.setloclist, desc = "diagnostics loclist" },
+  { "<leader>lQ", vim.diagnostic.setqflist, desc = "diagnostics quickfix" },
+  { "<leader>lr", vim.lsp.buf.references, desc = "references" },
+  { "<leader>lR", vim.lsp.buf.rename, desc = "rename symbol" },
+  { "<leader>ls", vim.lsp.buf.signature_help, desc = "signature help" },
+  { "<leader>lS", vim.lsp.buf.document_symbol, desc = "document symbols" },
+  { "<leader>lt", vim.lsp.buf.type_definition, desc = "type definition" },
+  { "<leader>lx", lsp_restart, desc = "restart lsp" },
+  { "<leader>lX", lsp_stop, desc = "stop lsp" },
+  { "<leader>lA", lsp_start, desc = "start lsp" },
+  { "<leader>l?", lsp_health, desc = "lsp health" },
+
+  { "<leader>lw", group = "workspace" },
+  { "<leader>lwa", vim.lsp.buf.add_workspace_folder, desc = "add folder" },
+  { "<leader>lwl", vim.lsp.buf.list_workspace_folders, desc = "list folders" },
+  { "<leader>lwr", vim.lsp.buf.remove_workspace_folder, desc = "remove folder" },
+  { "<leader>lws", vim.lsp.buf.workspace_symbol, desc = "workspace symbols" },
+
+  { "gd", vim.lsp.buf.definition, desc = "definition" },
+  { "gD", vim.lsp.buf.declaration, desc = "declaration" },
+  { "gi", vim.lsp.buf.implementation, desc = "implementation" },
+  { "gr", vim.lsp.buf.references, desc = "references" },
+  { "K", vim.lsp.buf.hover, desc = "hover docs" },
+  { "[d", previous_diagnostic, desc = "previous diagnostic" },
+  { "]d", next_diagnostic, desc = "next diagnostic" },
+})
 
 -- luasnip setup
 local luasnip = require 'luasnip'
+require('luasnip.loaders.from_vscode').lazy_load()
 
 -- nvim-cmp setup
 local cmp = require 'cmp'
@@ -74,8 +155,26 @@ cmp.setup {
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
+    { name = 'path' },
+    { name = 'buffer' },
   },
 }
+
+vim.api.nvim_create_augroup("TexSettings", { clear = true })
+vim.api.nvim_create_autocmd(
+  "FileType",
+  {
+    pattern = { "tex", "plaintex", "bib" },
+    group = "TexSettings",
+    callback = function()
+      vim.opt_local.conceallevel = 2
+      vim.opt_local.linebreak = true
+      vim.opt_local.spell = true
+      vim.opt_local.spelllang = "en_us"
+      vim.opt_local.wrap = true
+    end,
+  }
+)
 
 -- Black autoformat on save
 vim.api.nvim_create_augroup("AutoFormat", {})

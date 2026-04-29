@@ -6,5 +6,9 @@ require("nvim-tree").setup({
 })
 
 wk.add({
-  { "<leader>n", "<Cmd>NvimTreeToggle<CR>", desc = "toggle nvim-tree" },
+  { "<leader>e", group = "explorer" },
+  { "<leader>ee", "<Cmd>NvimTreeToggle<CR>", desc = "toggle explorer" },
+  { "<leader>ef", "<Cmd>NvimTreeFindFile<CR>", desc = "reveal current file" },
+  { "<leader>er", "<Cmd>NvimTreeRefresh<CR>", desc = "refresh explorer" },
+  { "<leader>ec", "<Cmd>NvimTreeCollapse<CR>", desc = "collapse folders" },
 })
