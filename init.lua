@@ -66,7 +66,6 @@ require("lazy").setup({
     },
     config = true,
   },
-  'romgrk/barbar.nvim',
   'nvim-treesitter/nvim-treesitter',
   {
     "mikavilpas/yazi.nvim",
@@ -182,4 +181,3 @@ require("lazy").setup({
   require("keymaps")
   require("plugins/neogit")
   require("plugins/telescope")
-  require("plugins/barbar")
